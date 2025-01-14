@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+
+[data-theme="dark"] {
+  --background: #791313;
+}
+
+[data-theme="light"] {
+  --background: #646cff;
+}
