@@ -40,6 +40,6 @@ jobs:
             pnpm build
 
             echo "===== Starting project ====="
-            pnpm start
+            pnpm start-production
 
             echo "===== Deploy finished ====="

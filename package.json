@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "npx serve -s dist"
+    "start": "npx serve -s dist",
+    "start-production": "pm2 start npm --name \"my-app\" -- start"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.64.0",
