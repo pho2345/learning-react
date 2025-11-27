@@ -11,7 +11,7 @@ const Navbar = () => {
                 {/* Logo */}
                 <div className="flex gap-3 items-center">
                     <img src="https://tonfi.ai/assets/tonfi/images/logo.png" alt="logo" className="w-10 h-10" />
-                    <h1 className="text-2xl font-bold text-gray-800 hidden sm:block">Admin</h1>
+                    <h1 className="text-2xl font-bold text-gray-800 hidden sm:block">Admin abcde</h1>
                 </div>
 
                 <div className="h-[40px] flex items-center px-3 gap-1">
