@@ -16,22 +16,37 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            set -x   # in ra từng lệnh bash đang chạy
+            set -e
+            echo "===== CONNECTED TO EC2 ====="
 
-            echo "===== Start deploy ====="
-            echo "Current user: $(whoami)"
-            echo "Current directory: $(pwd)"
-            cd /home/ubuntu/learning-react || { echo "Directory not found"; exit 1; }
-            echo "Listing files in current directory:"
-            ls -la
+            cd /home/ubuntu/learning-react
 
             if [ ! -d ".git" ]; then
-              echo "First deploy → clone repo"
+              echo "===== First deploy → clone repo ====="
               git clone -b staging git@github.com:pho2345/learning-react.git .
             else
-              echo "Pull latest changes"
+              echo "===== Pull latest code ====="
               git pull origin staging
             fi
+
+            echo "===== Check Node.js ====="
+            if ! command -v node &> /dev/null; then
+              echo "Node not found, installing Node 20..."
+              curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+
+            echo "Node version:"
+            node -v
+
+            echo "===== Check pnpm ====="
+            if ! command -v pnpm &> /dev/null; then
+              echo "pnpm not found, installing..."
+              sudo npm install -g pnpm
+            fi
+
+            echo "pnpm version:"
+            pnpm -v
 
             echo "===== Installing dependencies ====="
             pnpm install
@@ -39,7 +54,7 @@ jobs:
             echo "===== Building project ====="
             pnpm build
 
-            echo "===== Starting project ====="
-            pnpm start-production
+            echo "===== Starting project with PM2 ====="
+            pm2 reload myapp-staging || pm2 start pnpm --name "myapp-staging" -- start
 
-            echo "===== Deploy finished ====="
+            echo "✅ DEPLOY FINISHED SUCCESSFULLY"
