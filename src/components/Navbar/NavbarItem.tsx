@@ -8,3 +8,5 @@ const NavbarItem = ({ icon, title }:  {title: string, icon: React.ReactNode }) =
         </div>
     );
 }
+
+export default NavbarItem;
